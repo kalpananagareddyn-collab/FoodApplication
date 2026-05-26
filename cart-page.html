@@ -1,0 +1,181 @@
+<div class="main-layout">
+
+  <div class="cart-container">
+
+    <mat-card
+    class="cart-card"
+    *ngFor="let item of cartItems">
+
+      <img
+      mat-card-image
+      [src]="item.food.imageUrl">
+
+      <div class="details">
+
+        <h2>
+          {{item.food.name}}
+        </h2>
+
+        <p>
+          Price :
+          ₹{{item.food.price}}
+        </p>
+
+        <p>
+          Quantity :
+          {{item.quantity}}
+        </p>
+
+        <p>
+          Total :
+          ₹{{getItemTotal(item)}}
+        </p>
+
+        <mat-accordion>
+
+          <mat-expansion-panel>
+
+            <mat-expansion-panel-header>
+
+              <mat-panel-title>
+
+                Customize Your Food
+
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+            <div
+            *ngFor="let custom of item.food.customizations"
+            class="customization-option">
+
+              <mat-checkbox
+              [(ngModel)]="custom.selected">
+
+                {{custom.name}}
+
+                (+₹{{custom.price}})
+
+              </mat-checkbox>
+
+            </div>
+
+          </mat-expansion-panel>
+
+        </mat-accordion>
+
+        <div class="selected-options">
+
+          <p
+          *ngFor="let custom of item.food.customizations">
+
+            <span *ngIf="custom.selected">
+
+              ✅ {{custom.name}}
+              Added (+₹{{custom.price}})
+
+            </span>
+
+          </p>
+
+        </div>
+
+        <div class="quantity-buttons">
+
+          <button
+          mat-mini-fab
+          color="warn"
+          (click)="decreaseQuantity(item)">
+
+            -
+
+          </button>
+
+          <span class="quantity-text">
+
+            {{item.quantity}}
+
+          </span>
+
+          <button
+          mat-mini-fab
+          color="primary"
+          (click)="increaseQuantity(item)">
+
+            +
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </mat-card>
+
+  </div>
+
+  <div
+  class="order-section"
+  *ngIf="cartItems.length > 0 && !orderPlaced">
+
+    <h2>
+      🛒 Order Summary
+    </h2>
+
+    <p>
+      Total Items :
+      {{cartItems.length}}
+    </p>
+
+    <p>
+      Grand Total :
+      ₹{{getTotalPrice()}}
+    </p>
+
+    <button
+    mat-raised-button
+    color="primary"
+    class="place-order-btn"
+    (click)="placeOrder()">
+
+      Place Order
+
+    </button>
+
+  </div>
+
+</div>
+
+<div
+class="success-message"
+*ngIf="orderPlaced">
+
+  <h2>
+    🎉 Thank you for your order
+  </h2>
+
+  <p>
+    Your delicious food is being prepared 👨‍🍳🍕
+    It will be ready to taste soon 😋
+  </p>
+
+  <button
+  mat-raised-button
+  color="accent"
+  (click)="goBack()">
+
+    Back
+
+  </button>
+
+</div>
+
+<div
+class="empty-cart"
+*ngIf="cartItems.length === 0 && !orderPlaced">
+
+  <h2>
+    Your cart is empty 🛒
+  </h2>
+
+</div>

@@ -1,0 +1,30 @@
+<h1>
+
+  ❤️ My Wishlist
+
+</h1>
+
+<div class="wishlist-container">
+
+  <div
+  class="wishlist-card"
+
+  *ngFor="let food of wishlistFoods">
+
+    <img [src]="food.imageUrl">
+
+    <h2>
+
+      {{food.name}}
+
+    </h2>
+
+    <p>
+
+      ₹{{food.price}}
+
+    </p>
+
+  </div>
+
+</div>
